@@ -39,7 +39,7 @@ zf = mapper.fit_transform(df)
 train_df = pd.read_csv('data/train.csv')
 
 
-results = zf.merge(train_df, how='inner', left_on='#', right_on='First_pokemon')
+#results = zf.merge(train_df, how='inner', left_on='#', right_on='First_pokemon')
 
 res = train_df.merge(zf, how='inner', left_on='First_pokemon', right_on='#')
 
