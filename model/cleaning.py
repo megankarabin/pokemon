@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelBinarizer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.base import BaseEstimator, TransformerMixin
 
 df = pd.read_csv('data/pokemon.csv')
 
@@ -37,7 +38,7 @@ mapper = DataFrameMapper([
 zf = mapper.fit_transform(df)
 
 train_df = pd.read_csv('data/train.csv')
-
+train_df
 
 #results = zf.merge(train_df, how='inner', left_on='#', right_on='First_pokemon')
 
@@ -57,3 +58,21 @@ log = LogisticRegression()
 log.fit(X_train,y_train)
 log.score(X_train,y_train)
 log.score(X_test,y_test)
+
+
+
+
+
+
+df.head()
+
+# class Type2_Fix(BaseEstimator,TransformerMixin):
+#
+#     def __init__(self):
+#         pass
+#
+#     def fit(self, X, y=None):
+#         return self
+#
+#     def _double_up(self, X):
+#         type =

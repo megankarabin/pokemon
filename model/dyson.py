@@ -7,6 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 import pickle
+from catboost import CatBoostClassifier
 
 df = pd.read_csv('data/pokemon.csv')
 
@@ -55,13 +56,13 @@ mapper = DataFrameMapper([
 Z_train = mapper.fit_transform(X_train)
 Z_test = mapper.fit_transform(X_test)
 
-log = LogisticRegression()
+cat = CatBoostClassifier()
 # log.fit(Z_train,y_train)
 # log.score(Z_train,y_train)
 # log.score(Z_test,y_test)
-pipe = make_pipeline(mapper,log)
+pipe = make_pipeline(mapper,cat)
 
 pipe.fit(X_train,y_train)
 pipe.score(X_test,y_test)
 
-#pickle.dump(pipe, open("pipe.pkl", "wb"))
+pickle.dump(pipe, open("pipe.pkl", "wb"))
