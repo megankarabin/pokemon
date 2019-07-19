@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn_pandas import DataFrameMapper, CategoricalImputer
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import LabelBinarizer, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -25,32 +25,32 @@ X = (res.drop(columns=['win','Winner']))
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
 mapper = DataFrameMapper([
-('First_pokemon', None),
-('Second_pokemon', None),
+#('First_pokemon', None),
+#('Second_pokemon', None),
 #('#_x', None),
 #('Name_x', None),
 ('Type 1_x', LabelBinarizer()),
 #('Type 2_x', None),
-('HP_x', None),
-('Attack_x', None),
-('Defense_x', None),
-('Sp. Atk_x', None),
-('Sp. Def_x', None),
-('Speed_x', None),
+(['HP_x'], StandardScaler()),
+(['Attack_x'], StandardScaler()),
+(['Defense_x'], StandardScaler()),
+(['Sp. Atk_x'], StandardScaler()),
+(['Sp. Def_x'], StandardScaler()),
+(['Speed_x'], StandardScaler()),
 #('Generation_x', None),
 ('Legendary_x', LabelBinarizer()),
 #('#_y', None),
 #('Name_y', None),
 ('Type 1_y', LabelBinarizer()),
 #('Type 2_y', None),
-('HP_y', None),
-('Attack_y', None),
-('Defense_y', None),
-('Sp. Atk_y', None),
-('Sp. Def_y', None),
-('Speed_y', None),
+(['HP_y'], StandardScaler()),
+(['Attack_y'], StandardScaler()),
+(['Defense_y'], StandardScaler()),
+(['Sp. Atk_y'], StandardScaler()),
+(['Sp. Def_y'], StandardScaler()),
+(['Speed_y'], StandardScaler()),
 #('Generation_y', None),
-('Legendary_y', LabelBinarizer())
+(['Legendary_y'], LabelBinarizer())
 ],df_out=True)
 
 Z_train = mapper.fit_transform(X_train)
