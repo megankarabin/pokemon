@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn_pandas import DataFrameMapper, CategoricalImputer
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv('data/pokemon.csv')
 
@@ -15,9 +17,6 @@ df = pd.read_csv('data/pokemon.csv')
 #         ty2.append(x)
 #
 # df['Type 2'].isnull()
-
-
-# df
 
 
 mapper = DataFrameMapper([
@@ -37,4 +36,24 @@ mapper = DataFrameMapper([
 
 zf = mapper.fit_transform(df)
 
-zf
+train_df = pd.read_csv('data/train.csv')
+
+
+results = zf.merge(train_df, how='inner', left_on='#', right_on='First_pokemon')
+
+res = train_df.merge(zf, how='inner', left_on='First_pokemon', right_on='#')
+
+res = res.merge(zf, how='inner', left_on='Second_pokemon', right_on='#')
+
+res['win'] = np.where(res['First_pokemon']==res['Winner'], 1, 0)
+
+y = res['win']
+X = (res.drop(columns=['win','Winner']))
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+
+log = LogisticRegression()
+log.fit(X_train,y_train)
+log.score(X_train,y_train)
+log.score(X_test,y_test)
